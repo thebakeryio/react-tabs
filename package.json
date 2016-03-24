@@ -2,7 +2,7 @@
   "name": "react-tabs",
   "version": "0.5.3",
   "description": "React tabs component",
-  "main": "lib/main.js",
+  "main": "dist/react-tabs.js",
   "scripts": {
     "test": "./node_modules/.bin/rackt test --single-run --browsers Firefox",
     "start": "./node_modules/.bin/rackt server"

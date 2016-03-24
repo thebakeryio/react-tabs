@@ -93,11 +93,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _helpersChildrenPropType2 = _interopRequireDefault(_helpersChildrenPropType);
 	
-	// Determine if a node from event.target is a Tab element
-	function isTabNode(node) {
-	  return node.nodeName === 'LI' && node.getAttribute('role') === 'tab';
-	}
-	
 	// Determine if a tab node is disabled
 	function isTabDisabled(node) {
 	  return node.getAttribute('aria-disabled') === 'true';
@@ -158,7 +153,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  handleClick: function handleClick(e) {
 	    var node = e.target;
 	    do {
-	      if (isTabNode(node)) {
+	      if (this.isTabNode(node)) {
 	        if (isTabDisabled(node)) {
 	          return;
 	        }
@@ -171,7 +166,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	
 	  handleKeyDown: function handleKeyDown(e) {
-	    if (isTabNode(e.target)) {
+	    if (this.isTabNode(e.target)) {
 	      var index = this.state.selectedIndex;
 	      var preventDefault = false;
 	
@@ -395,6 +390,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    );
 	  },
 	
+	  // Determine if a node from event.target is a Tab element
+	  isTabNode: function isTabNode(node) {
+	    return node.nodeName === 'LI' && node.getAttribute('role') === 'tab' && node.parentElement.parentElement === (0, _reactDom.findDOMNode)(this);
+	  },
+	
 	  // This is an anti-pattern, so sue me
 	  copyPropsToState: function copyPropsToState(props) {
 	    var selectedIndex = props.selectedIndex;
@@ -438,8 +438,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	  Copyright (c) 2015 Jed Watson.
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
 	  Licensed under the MIT License (MIT), see
 	  http://jedwatson.github.io/classnames
 	*/
@@ -451,7 +451,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		var hasOwn = {}.hasOwnProperty;
 	
 		function classNames () {
-			var classes = '';
+			var classes = [];
 	
 			for (var i = 0; i < arguments.length; i++) {
 				var arg = arguments[i];
@@ -460,28 +460,28 @@ return /******/ (function(modules) { // webpackBootstrap
 				var argType = typeof arg;
 	
 				if (argType === 'string' || argType === 'number') {
-					classes += ' ' + arg;
+					classes.push(arg);
 				} else if (Array.isArray(arg)) {
-					classes += ' ' + classNames.apply(null, arg);
+					classes.push(classNames.apply(null, arg));
 				} else if (argType === 'object') {
 					for (var key in arg) {
 						if (hasOwn.call(arg, key) && arg[key]) {
-							classes += ' ' + key;
+							classes.push(key);
 						}
 					}
 				}
 			}
 	
-			return classes.substr(1);
+			return classes.join(' ');
 		}
 	
 		if (typeof module !== 'undefined' && module.exports) {
 			module.exports = classNames;
 		} else if (true) {
 			// register as 'classnames', consistent with npm package name
-			!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
 				return classNames;
-			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 		} else {
 			window.classNames = classNames;
 		}
